@@ -18,4 +18,30 @@
 | 模型 | 答案正确率 | URL检索正确率 |
 |------|-----------|--------------|
 | Qwen3-4B（本地） | 49.48% | 65.74% |
-| 智谱 GLM-4-Flash（API） | 60.48% | 65.74% |
+| 智谱 GLM-4-Flash（API） | 58.48% | 65.74% |
+
+## 📁 项目结构：
+RAG/
+├── chroma_db/ # 向量数据库（旧版）
+├── chroma_db_with_title_with_publish_date/ # 向量数据库（新版，含元数据）
+├── models/ # 本地 Qwen 模型
+│ └── Qwen/
+│ └── Qwen3-4B-Instruct-2507/ # Qwen3-4B 模型文件
+├── news_corpus_simple/ # 原始新闻数据
+│ └── cleaned/ # 清洗后的新闻 JSON 文件
+├── qwen_test_results/ # Qwen 模型测试结果
+├── zhipu_test_results/ # 智谱 API 测试结果
+│
+├── build_vector_db.py # 构建向量数据库
+├── build_vector_db_new.py # 构建向量数据库（新版，含标题/时间）
+├── check_data.py # 查看数据集信息
+├── clean_and_filter.py # 清洗新闻数据
+├── download_qwen_model.py # 下载 Qwen 模型
+├── get_original_data.py # 爬取原始新闻
+├── rag_qa_chat.py # RAG 问答主程序（本地 Qwen）
+├── rag_zhipu_chat.py # RAG 问答主程序（智谱 API）
+├── test_rag.py # 本地 Qwen 测试脚本
+├── test_zhipu.py # 智谱 API 测试脚本
+├── documents_cache.pkl # BM25 索引缓存
+├── qwen3_model_path.txt # Qwen 模型路径记录
+└── 150/ # 测试数据目录
