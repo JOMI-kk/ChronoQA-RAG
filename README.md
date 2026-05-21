@@ -89,6 +89,23 @@ python clean_and_filter.py
 # 构建向量数据库（含正文、标题、发布时间）
 python build_vector_db_new.py
 ```
-
 ###  5. 下载 Qwen 模型（本地方案）
+```bash
 python download_qwen_model.py
+```
+### 6.运行问答系统
+```bash
+# 交互式问答（本地 Qwen）
+python rag_qa_chat.py
+
+# 交互式问答（智谱 API）
+python rag_zhipu_chat.py
+```
+### 7.测试准确率
+```bash
+# 测试本地 Qwen
+python test_rag.py
+
+# 测试智谱 API
+python test_zhipu.py
+```
