@@ -123,6 +123,8 @@ python test_zhipu.py
 | `test_rag.py` | 批量测试本地 Qwen 模型 | `qwen_test_results/result_20260518_181304.json` |
 | `test_zhipu.py` | 批量测试智谱 API | `zhipu_test_results/test_zhipu_20260520_221638.json` |
 
+你说得对，格式有问题。下面是正确的写法：
+
 ```markdown
 ## ⚙️ 核心配置
 
@@ -146,5 +148,4 @@ class Config:
     zhipu_model = "glm-4-flash"     # 免费模型
     max_new_tokens = 512
     temperature = 0.3
-```
 ```
