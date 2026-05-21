@@ -174,7 +174,7 @@ quantization_config = BitsAndBytesConfig(
 )
 ```
 ### 3. LangChain 版本适配
-angChain 1.0 版本对模块结构进行了重构，旧版导入路径已变更。
+LangChain 1.0 版本对模块结构进行了重构，旧版导入路径已变更。
 
 **旧版导入（已废弃）：**
 
