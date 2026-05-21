@@ -122,3 +122,29 @@ python test_zhipu.py
 | `rag_zhipu_chat.py` | 智谱 API 交互式问答 | 控制台交互 |
 | `test_rag.py` | 批量测试本地 Qwen 模型 | `qwen_test_results/result_20260518_181304.json` |
 | `test_zhipu.py` | 批量测试智谱 API | `zhipu_test_results/test_zhipu_20260520_221638.json` |
+
+```markdown
+## ⚙️ 核心配置
+
+### 向量数据库配置（`rag_qa_chat.py`）
+
+```python
+class Config:
+    chroma_db_dir = r"F:\Pycharm\RAG\chroma_db_with_title_with_publish_date"
+    collection_name = "langchain"
+    embedding_model_name = "BAAI/bge-small-zh-v1.5"
+    top_k = 5
+    max_new_tokens = 1024
+    temperature = 0.3
+```
+
+### 智谱 API 配置（`rag_zhipu_chat.py`）
+
+```python
+class Config:
+    zhipu_api_key = "your-api-key"  # 替换为你的 API Key
+    zhipu_model = "glm-4-flash"     # 免费模型
+    max_new_tokens = 512
+    temperature = 0.3
+```
+```
