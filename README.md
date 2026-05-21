@@ -13,7 +13,7 @@
 
 ## 📊 项目结果
 
-## 测试结果（5176个样本）
+## 测试结果（5176个问答对样本）
 
 | 模型 | 答案正确率 | URL检索正确率 |
 |------|-----------|--------------|
@@ -23,26 +23,23 @@
 ## 📁 项目结构
 ```text
 RAG/
-├── chroma_db/                                    # 向量数据库（旧版）
-├── chroma_db_with_title_with_publish_date/       # 向量数据库（新版，含元数据）
+├── chroma_db/                                    # 向量数据库（旧版，只有content作为page_content，其他的键作为metadata）
+├── chroma_db_with_title_with_publish_date/       # 向量数据库（增强版，content+title+publish_date作为page_content）
 ├── models/                                       # 本地 Qwen 模型
 │   └── Qwen/
 │       └── Qwen3-4B-Instruct-2507/              # Qwen3-4B 模型文件
-├── news_corpus_simple/                          # 原始新闻数据
-│   └── cleaned/                                  # 清洗后的新闻 JSON 文件
+├── news_corpus_simple/                          # 原始新闻数据（6060篇新闻）
+│   └── cleaned/                                  # 清洗后的新闻 JSON 文件，共5034篇新闻作为原始数据库（过滤掉1026篇无效URL、404页面的新闻）
 ├── qwen_test_results/                           # Qwen 模型测试结果
 ├── zhipu_test_results/                          # 智谱 API 测试结果
 ├── build_vector_db.py                           # 构建向量数据库
-├── build_vector_db_new.py                       # 构建向量数据库（新版）
+├── build_vector_db_new.py                       # 构建向量数据库（增强版）
 ├── check_data.py                                # 查看数据集信息
 ├── clean_and_filter.py                          # 清洗新闻数据
 ├── download_qwen_model.py                       # 下载 Qwen 模型
 ├── get_original_data.py                         # 爬取原始新闻
-├── rag_qa_chat.py                               # RAG 问答（本地 Qwen）
-├── rag_zhipu_chat.py                            # RAG 问答（智谱 API）
-├── test_rag.py                                  # 本地 Qwen 测试
-├── test_zhipu.py                                # 智谱 API 测试
-├── documents_cache.pkl                          # BM25 索引缓存
-├── qwen3_model_path.txt                         # Qwen 模型路径记录
-└── 150/                                         # 测试数据目录
+├── rag_qa_chat.py                               # RAG交互式问答（本地 Qwen）
+├── rag_zhipu_chat.py                            # RAG交互式问答（智谱 API）
+├── test_rag.py                                  # 本地 Qwen 测试（基于5034篇新闻，测试5176个问答对，统计答案准确率和 URL 检索召回率）
+└── test_zhipu.py                                # 智谱 API 测试（基于5034篇新闻，测试5176个问答对，统计答案准确率和 URL 检索召回率）
 ```
