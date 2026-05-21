@@ -43,3 +43,30 @@ RAG/
 ├── test_rag.py                                  # 本地 Qwen 测试（基于5034篇新闻，测试5176个问答对，统计答案准确率和 URL 检索召回率）
 └── test_zhipu.py                                # 智谱 API 测试（基于5034篇新闻，测试5176个问答对，统计答案准确率和 URL 检索召回率）
 ```
+
+## 🚀 快速开始
+
+### 1. 环境配置
+
+```bash
+# 创建 conda 环境
+conda create -n ChronoQA-RAG python=3.10
+conda activate ChronoQA-RAG
+
+# 安装依赖
+pip install -r requirements.txt
+torch>=2.0.0
+transformers>=4.37.0
+sentence-transformers>=2.2.0
+chromadb>=0.4.0
+pandas>=2.0.0
+zhipuai>=2.0.0
+bitsandbytes>=0.41.0
+trafilatura>=1.6.0
+jieba>=0.42.0
+rank-bm25>=0.2.0
+
+###2. 配置国内镜像（解决国内连接不到导致下载不了模型的问题）
+#在代码开头加上
+import os
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
