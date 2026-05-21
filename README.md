@@ -9,3 +9,4 @@
 - 用户提问：“COTODAMA歌词音箱和苹果停产iPhone 6系列哪个事件更早发生？”
 - 系统检索相关新闻 → 理解时间关系 → 生成答案：“COTODAMA歌词音箱更早”
 - 同时输出答案来源（新闻URL），保证可追溯
+<img width="1118" height="422" alt="image" src="https://github.com/user-attachments/assets/10ffe7d5-383a-4b93-ab01-009456774df5" />
