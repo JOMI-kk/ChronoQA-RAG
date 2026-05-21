@@ -217,3 +217,4 @@ from langchain_core.documents import Document
 1. **数据来源**：ChronoQA 数据集来源于新浪新闻，其中的问答对由模型自动生成，经过我个人验证，小部分答案存在不准确的情况。
 
 2. **URL 失效问题**：原始新闻共 6,060 篇，其中 1,026 篇（约 17%）的 URL 已失效（返回 404），无法获取原文。这导致 RAG 系统在检索时无法命中这些失效链接，从而降低了 URL 召回率。
+<img width="503" height="686" alt="image" src="https://github.com/user-attachments/assets/d395f9ea-7256-454f-9bf0-f49874ec0056" />
