@@ -116,9 +116,9 @@ python test_zhipu.py
 | `get_original_data.py` | 从 ChronoQA 数据集爬取新闻原文 | `news_corpus_simple/articles/` |
 | `clean_and_filter.py` | 清洗新闻（去广告、过滤404、过滤无效URL） | `news_corpus_simple/cleaned/` |
 | `check_data.py` | 查看数据集统计信息 | 控制台输出 |
-| `build_vector_db_new.py` | 构建向量数据库（标题+正文联合向量化） | `chroma_db_with_title_with_publish_date/` |
+| `build_vector_db_new.py` | 构建向量数据库（标题+正文+发布时间联合向量化） | `chroma_db_with_title_with_publish_date/` |
 | `download_qwen_model.py` | 下载 Qwen3-4B 模型（4bit量化） | `models/Qwen/` |
 | `rag_qa_chat.py` | 本地 Qwen 模型交互式问答 | 控制台交互 |
 | `rag_zhipu_chat.py` | 智谱 API 交互式问答 | 控制台交互 |
-| `test_rag.py` | 批量测试本地 Qwen 模型 | `qwen_test_results/result_*.json` |
-| `test_zhipu.py` | 批量测试智谱 API | `zhipu_test_results/result_*.json` |
+| `test_rag.py` | 批量测试本地 Qwen 模型 | `qwen_test_results/result_20260518_181304.json` |
+| `test_zhipu.py` | 批量测试智谱 API | `zhipu_test_results/test_zhipu_20260520_221638.json` |
