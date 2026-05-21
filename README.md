@@ -218,3 +218,6 @@ from langchain_core.documents import Document
 
 2. **URL 失效问题**：原始新闻共 6,060 篇，其中 1,026 篇（约 17%）的 URL 已失效（返回 404），无法获取原文。这导致 RAG 系统在检索时无法命中这些失效链接，从而降低了 URL 召回率。
 <img width="503" height="686" alt="image" src="https://github.com/user-attachments/assets/d395f9ea-7256-454f-9bf0-f49874ec0056" />
+
+<img width="519" height="1193" alt="image" src="https://github.com/user-attachments/assets/cee86d16-6caf-47ac-88ed-2b4a570f0d2a" />
+
