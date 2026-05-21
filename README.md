@@ -127,7 +127,7 @@ python test_zhipu.py
 
 ## ⚙️ 核心配置
 
-### 向量数据库配置（`rag_qa_chat.py`）
+### 向量数据库配置（rag_qa_chat.py）
 
 ```python
 class Config:
@@ -135,16 +135,59 @@ class Config:
     collection_name = "langchain"
     embedding_model_name = "BAAI/bge-small-zh-v1.5"
     top_k = 5
-    max_new_tokens = 1024
-    temperature = 0.3
-```
-
-### 智谱 API 配置（`rag_zhipu_chat.py`）
-
-```python
-class Config:
-    zhipu_api_key = "your-api-key"  # 替换为你的 API Key
-    zhipu_model = "glm-4-flash"     # 免费模型
     max_new_tokens = 512
     temperature = 0.3
 ```
+
+### 智谱 API 配置（rag_zhipu_chat.py）
+
+```python
+class Config:
+    zhipu_api_key = "e241e6d2788a4c5fb08b1f1ea2f0d1f1.0iJs0FM7vE5oesHca"  
+    zhipu_model = "glm-4-flash"     
+    max_new_tokens = 512
+    temperature = 0.3
+```
+
+
+## ❓ 常见问题与解决
+
+### 1. 网络问题（HuggingFace 连接超时）
+
+```python
+# 在代码开头添加
+import os
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+```
+
+### 2. 显存不足（8G以下）
+
+```python
+# 使用 4bit 量化加载模型
+from transformers import BitsAndBytesConfig
+
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_quant_type='nf4',
+    bnb_4bit_use_double_quant=True,
+)
+```
+### 3. LangChain 版本适配
+angChain 1.0 版本对模块结构进行了重构，旧版导入路径已变更。
+
+**旧版导入（已废弃）：**
+
+```python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.schema import Document
+```
+
+**新版本导入：**
+```python
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_core.documents import Document
