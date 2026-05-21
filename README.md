@@ -73,7 +73,7 @@ import os
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 ```
 
-###  3. 准备数据
+##  3. 准备数据
 ```bash
 # 爬取新闻数据
 python get_original_data.py
