@@ -109,3 +109,14 @@ python test_rag.py
 # 测试智谱 API
 python test_zhipu.py
 ```
+📖 各脚本功能说明
+脚本	功能	输出
+get_original_data.py	爬取 ChronoQA 数据集中的新闻	news_corpus_simple/cleaned/*.json
+clean_and_filter.py	清洗新闻，去除广告和噪音	清洗后的 JSON 文件
+check_data.py	查看数据集统计信息	控制台输出
+build_vector_db_new.py	构建 Chroma 向量数据库	chroma_db_with_title_with_publish_date/
+download_qwen_model.py	下载 Qwen3-4B 模型（4bit量化）	models/Qwen/
+rag_qa_chat.py	本地 Qwen RAG 问答	交互式问答
+rag_zhipu_chat.py	智谱 API RAG 问答	交互式问答
+test_rag.py	测试本地 Qwen 准确率	JSON 结果文件
+test_zhipu.py	测试智谱 API 准确率	JSON 结果文件
