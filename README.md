@@ -191,3 +191,29 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
+```
+### 4.向量数据库的检索质量不佳，用户问题与目标新闻的语义匹配度低，导致正确答案对应的 URL 无法被成功召回。
+
+（1）**向量数据库优化**：原版本仅将 content 作为检索内容，增强版将 content + title + publish_date 共同作为 page_content 参与向量化，提升检索召回率。
+
+（2）**检索数量调整**：将 top_k从 3 增加到 5，返回更多候选新闻，提高正确答案命中率。
+
+### 5.检索到正确 URL 后，模型推理能力不足，无法基于新闻内容生成正确答案。
+
+解决方案：
+
+（1）**模型升级**：将本地 Qwen3-4B 模型更换为智谱 GLM-4-Flash 模型（免费 API），提升答案生成的准确率。
+
+（2）**字符串精确匹配**：直接比较标准答案与模型答案是否完全一致或存在包含关系
+
+（3） **数字匹配**：提取答案中的数字进行比对，解决数值类答案格式差异问题
+
+（4）**中文数字转换匹配**：支持中文数字（一、二、三）与阿拉伯数字（1、2、3）的互转匹配
+
+（5） **关键词匹配**：提取答案中的中文关键词（2字及以上），计算重合比例达到25%即判定为正确
+
+### 6.**数据集局限性：**
+
+1. **数据来源**：ChronoQA 数据集来源于新浪新闻，其中的问答对由模型自动生成，经过我个人验证，小部分答案存在不准确的情况。
+
+2. **URL 失效问题**：原始新闻共 6,060 篇，其中 1,026 篇（约 17%）的 URL 已失效（返回 404），无法获取原文。这导致 RAG 系统在检索时无法命中这些失效链接，从而降低了 URL 召回率。
