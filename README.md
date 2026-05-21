@@ -73,13 +73,17 @@ import os
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 ```
 
-##  3. 准备数据
+###  3. 准备数据
 ```bash
 # 爬取新闻数据
 python get_original_data.py
 
+# 检查数据集信息
+python check_data.py
+
 # 清洗新闻数据
 python clean_and_filter.py
-
-# 查看数据集信息
-python check_data.py
+```
+###  4. 构建向量数据库
+# 构建向量数据库（含正文、标题、发布时间）
+python build_vector_db_new.py
