@@ -124,9 +124,9 @@ python test_zhipu.py
 | `test_zhipu.py` | 批量测试智谱 API | `zhipu_test_results/test_zhipu_20260520_221638.json` |
 
 
-```markdown
+
 ## ⚙️ 核心配置
-```
+
 ### 向量数据库配置（`rag_qa_chat.py`）
 
 ```python
