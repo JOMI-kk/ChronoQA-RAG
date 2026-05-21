@@ -85,5 +85,10 @@ python check_data.py
 python clean_and_filter.py
 ```
 ###  4. 构建向量数据库
+```bash
 # 构建向量数据库（含正文、标题、发布时间）
 python build_vector_db_new.py
+```
+
+###  5. 下载 Qwen 模型（本地方案）
+python download_qwen_model.py
