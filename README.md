@@ -67,7 +67,7 @@ jieba>=0.42.0
 rank-bm25>=0.2.0
 ```
 ### 2. 配置国内镜像（解决国内网络连接不到 HuggingFace 导致下载模型失败的问题）
-
+```bash
 #在代码开头加上
 import os
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
