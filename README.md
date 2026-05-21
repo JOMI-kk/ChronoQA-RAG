@@ -21,7 +21,7 @@
 | 智谱 GLM-4-Flash（API） | 58.48% | 65.74% |
 
 ## 📁 项目结构
-## 项目结构
+```text
 RAG/
 ├── chroma_db/                                    # 向量数据库（旧版）
 ├── chroma_db_with_title_with_publish_date/       # 向量数据库（新版，含元数据）
@@ -45,3 +45,4 @@ RAG/
 ├── documents_cache.pkl                          # BM25 索引缓存
 ├── qwen3_model_path.txt                         # Qwen 模型路径记录
 └── 150/                                         # 测试数据目录
+```
