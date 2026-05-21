@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-05-18 23:13:04",
+  "total_samples": 5176,
+  "answer_accuracy": 49.48,
+  "url_accuracy": 65.74,
+  "correct_answers": 2561,
+  "correct_urls": 3396,
+  "elapsed_minutes": 785.41
+}
