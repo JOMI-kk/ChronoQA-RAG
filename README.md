@@ -20,7 +20,7 @@
 | Qwen3-4B（本地） | 49.48% | 65.74% |
 | 智谱 GLM-4-Flash（API） | 58.48% | 65.74% |
 
-## 📁 项目结构：
+## 📁 项目结构
 RAG/
 ├── chroma_db/ # 向量数据库（旧版）
 ├── chroma_db_with_title_with_publish_date/ # 向量数据库（新版，含元数据）
