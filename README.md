@@ -46,7 +46,7 @@ RAG/
 
 ## 🚀 快速开始
 
-### 一. 环境配置
+## 一. 环境配置
 
 ```bash
 # 创建 conda 环境
@@ -66,14 +66,14 @@ trafilatura>=1.6.0
 jieba>=0.42.0
 rank-bm25>=0.2.0
 ```
-### 二. 配置国内镜像（解决国内网络连接不到 HuggingFace 导致下载模型失败的问题）
+## 二. 配置国内镜像（解决国内网络连接不到 HuggingFace 导致下载模型失败的问题）
 ```bash
 #在代码开头加上
 import os
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 ```
 
-###  三. 准备数据
+##  三. 准备数据
 ```bash
 # 爬取新闻数据
 python get_original_data.py
@@ -84,7 +84,7 @@ python check_data.py
 # 清洗新闻数据
 python clean_and_filter.py
 ```
-```markdown
+
 ## `clean_and_filter.py` - 新闻数据清洗脚本
 
 ### 功能说明
@@ -113,7 +113,7 @@ python clean_and_filter.py
 
 
 python clean_and_filter.py
-```
+
 
 ### 输入输出
 
@@ -141,7 +141,7 @@ python clean_and_filter.py
 
 
 ###  四. 构建向量数据库
-```markdown
+
 ## `build_vector_db_new.py` - 向量数据库构建脚本
 
 ### 功能说明
@@ -233,9 +233,9 @@ Embedding模型加载完成
 - 首次运行需下载 Embedding 模型（约 100MB）
 - 建议在 GPU 环境下运行，CPU 也可运行但速度较慢
 - 原数据库 `chroma_db/` 不会被覆盖，可随时切换使用
-```
-###  五. 下载 Qwen 模型（本地方案）
-```markdown
+
+##  五. 下载 Qwen 模型（本地方案）
+
 ## `download_qwen_model.py` - Qwen3-4B 模型下载脚本
 
 ### 功能说明
@@ -289,17 +289,287 @@ python download_qwen_model.py
    os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
    ```
 
-### 6.运行问答系统
+## 六.运行问答系统
+
+### `rag_qa_chat.py` 与 `rag_zhipu_chat.py` - RAG 问答系统
+
+### 功能说明
+
+提供交互式 RAG 问答功能。用户输入问题，系统从向量数据库中检索相关新闻，再由大语言模型生成答案并附上新闻来源链接。
+
+**两个版本的区别：**
+
+| 文件 | 使用的模型 | 环境要求 |
+|------|-----------|---------|
+| `rag_qa_chat.py` | 本地 Qwen3-4B 模型 | 需要 GPU（约 8G 显存） |
+| `rag_zhipu_chat.py` | 智谱 GLM-4-Flash API | 需要网络 + API Key（免费） |
+
+### 处理流程
+
+```mermaid
+flowchart LR
+    A[用户输入问题] --> B[向量检索]
+    B --> C[返回 Top-K 新闻]
+    C --> D[构建 Prompt]
+    D --> E[LLM 生成答案]
+    E --> F[输出答案 + 来源URL]
+```
+
+### 使用方法
+
 ```bash
-# 交互式问答（本地 Qwen）
+# 本地 Qwen 版本
 python rag_qa_chat.py
 
-# 交互式问答（智谱 API）
+# 智谱 API 版本
 python rag_zhipu_chat.py
 ```
-### 7.测试准确率
+
+### 交互示例
+
+```
+C:\Users\Administrator\miniconda3\envs\ChronoQA-RAG\python.exe F:\Pycharm\RAG\rag_qa_chat.py 
+正在启动ChronoQA RAG 系统...
+
+正在加载向量数据库...
+Loading weights: 100%|██████████| 71/71 [00:00<00:00, 7680.09it/s]
+向量数据库加载完成，共25714条数据
+
+正在加载Qwen模型...
+W0522 12:44:16.358000 10308 site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Loading weights: 100%|██████████| 398/398 [00:06<00:00, 57.74it/s]
+模型加载完成，设备：cuda:0
+
+
+======================================================================
+ChronoQA RAG 智能问答系统
+======================================================================
+输入'exit'退出
+======================================================================
+
+请输入您的问题：2024年3月19日天津队与北控队的比赛结果是什么？
+正在检索新闻...
+正在生成答案...
+
+======================================================================
+问题：2024年3月19日天津队与北控队的比赛结果是什么？
+======================================================================
+
+答案：
+2024年3月19日，天津队以107-125不敌北控队。
+
+--------------------------------------------------
+新闻来源：
+[1] https://sports.sina.com.cn/basketball/cba/2024-03-19/doc-inanwmap6942559.shtml
+[3] https://sports.sina.com.cn/china/j/2021-04-18/doc-ikmxzfmk7531099.shtml
+[5] https://sports.sina.com.cn/china/national/2021-06-09/doc-ikqciyzi8576073.shtml
+
+======================================================================
+```
+
+### 配置说明
+
+**本地 Qwen 版本配置（`rag_qa_chat.py`）：**
+
+```python
+class Config:
+    chroma_db_dir = r"F:\Pycharm\RAG\chroma_db_with_title_with_publish_date"
+    model_dir = r"F:\Pycharm\RAG\models\Qwen\Qwen3-4B-Instruct-2507"
+    top_k = 5
+    max_new_tokens = 512
+    temperature = 0.3
+```
+
+**智谱 API 版本配置（`rag_zhipu_chat.py`）：**
+
+```python
+class Config:
+    chroma_db_dir = r"F:\Pycharm\RAG\chroma_db_with_title_with_publish_date"
+    zhipu_api_key = "your-api-key"  # 替换为实际 API Key
+    zhipu_model = "glm-4-flash"     # 免费模型
+    top_k = 5
+    temperature = 0.3
+```
+
+### 核心函数
+
+| 函数 | 功能 |
+|------|------|
+| `load_vector_db()` | 加载 ChromaDB 向量数据库 |
+| `retrieve_new()` | 根据问题检索最相关的 Top-K 新闻 |
+| `build_prompt()` | 构建 system + user 提示词 |
+| `generate_answer()` | 调用模型生成答案 |
+| `print_answer_with_urls()` | 打印答案和新闻来源链接 |
+
+### 获取智谱 API Key
+
+1. 访问 [智谱AI开放平台](https://open.bigmodel.cn/)
+2. 注册账号并登录
+3. 在控制台获取 API Key
+4. `glm-4-flash` 模型完全免费
+
+### 退出方式
+
+输入 `exit` 或 `quit` 即可退出程序。
+
+
+
+## 七.测试准确率
+
+### `test_rag.py` - 本地 Qwen 模型批量测试
+
+**功能：** 测试本地 Qwen3-4B 模型的 RAG 问答准确率
+
+**核心代码：**
+
+```python
+# 加载模型和数据库
+collection = load_vector_db()
+model, tokenizer = load_qwen_model()
+
+# 随机抽取 934 条问答对测试
+df = pd.read_csv(chronoqa_path)
+test_samples = df.sample(n=934, random_state=11)
+
+# 逐条测试
+for row in test_samples:
+    retrieved = retrieve_new(collection, question, top_k=5)
+    predicted = generate_answer(model, tokenizer, question, retrieved)
+    url_match = is_url_match(retrieved, golden_urls)
+    answer_correct = is_answer_correct(golden, predicted)
+```
+
+**输出示例：**
+
+```
+======================================================================
+开始测试 - 2026-05-18 23:13:04
+======================================================================
+
+进度：1/5176
+问题：沧州雄狮 vs 河南 比赛结果？
+标准答案：沧州雄狮2-0河南
+
+模型答案：沧州雄狮客场2-0战胜河南队
+URL匹配：✅
+答案是否正确：✅
+
+======================================================================
+测试完成！
+总耗时：785.41分钟
+答案正确率：2561/5176 = 49.48%
+URL检索正确率：3396/5176 = 65.74%
+======================================================================
+```
+
+---
+
+### `test_zhipu.py` - 智谱 API 批量测试
+
+**功能：** 测试智谱 GLM-4-Flash 模型的 RAG 问答准确率
+
+
+**输出示例：**
+
+```
+======================================================================
+开始测试 - 2026-05-21 18:33:26
+======================================================================
+
+进度：1/5176
+问题：沧州雄狮 vs 河南 比赛结果？
+标准答案：沧州雄狮2-0河南
+
+模型答案：沧州雄狮客场2-0战胜河南队
+URL是否匹配：✅
+答案是否正确：✅
+
+======================================================================
+测试完成！
+总耗时：246.2分钟
+答案准确性：3026/5176 = 58.48%
+URL检索正确率：3396/5176 = 65.74%
+======================================================================
+```
+
+---
+
+### 答案正确性判断函数
+
+```python
+def is_answer_correct(golden: str, predicted: str) -> bool:
+    """四重匹配机制"""
+    # 1. 字符串匹配
+    if golden == predicted or golden in predicted:
+        return True
+    
+    # 2. 数字匹配
+    nums_golden = re.findall(r'\d+', golden)
+    nums_pred = re.findall(r'\d+', predicted)
+    if nums_golden and nums_pred and nums_golden[0] == nums_pred[0]:
+        return True
+    
+    # 3. 中文数字转换
+    chinese_nums = {'一':'1', '二':'2', '三':'3', '四':'4', '五':'5',
+                    '六':'6', '七':'7', '八':'8', '九':'9', '十':'10'}
+    for ch, num in chinese_nums.items():
+        if ch in golden and num in predicted:
+            return True
+    
+    # 4. 关键词匹配（重合度 ≥ 25%）
+    keywords_golden = set(re.findall(r'[\u4e00-\u9fa5]{2,}', golden))
+    keywords_pred = set(re.findall(r'[\u4e00-\u9fa5]{2,}', predicted))
+    if keywords_golden and keywords_pred:
+        ratio = len(keywords_golden & keywords_pred) / len(keywords_golden)
+        return ratio >= 0.25
+    
+    return False
+```
+
+---
+
+### URL 召回判断函数
+
+```python
+def is_url_match(retrieved_news: List[Dict], golden_urls: List[str]) -> bool:
+    """检查检索结果中是否包含标准答案的 URL"""
+    if not golden_urls:
+        return False
+    retrieved_urls = {news.get('url', '') for news in retrieved_news}
+    return bool(retrieved_urls & set(golden_urls))
+```
+
+---
+
+### 测试结果示例
+
+智谱 API 测试结果：
+
+```json
+{
+    "timestamp": "2026-05-21 18:33:26",
+    "total_samples": 5176,
+    "answer_accuracy": 58.48,
+    "url_accuracy": 65.74,
+    "correct_answers": 3026,
+    "correct_urls": 3396,
+    "elapsed_minutes": 246.22
+}
+```
+
+| 测试日期 | 答案准确率 | URL 召回率 | 正确答案数 | 耗时 |
+|---------|-----------|-----------|-----------|------|
+| 2026-05-18 | 49.48% | 65.74% | 2,561 | 785 分钟 |
+| 2026-05-21 | 58.48% | 65.74% | 3,026 | 246 分钟 |
+
+**优化效果：** 答案准确率提升约 9 个百分点
+
+---
+
+### 运行命令
+
 ```bash
-# 测试本地 Qwen
+# 测试本地 Qwen 模型
 python test_rag.py
 
 # 测试智谱 API
