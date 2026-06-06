@@ -609,7 +609,7 @@ class Config:
 
 ```python
 class Config:
-    zhipu_api_key = "e241e6d2788a4c5fb08b1f1ea2f0d1f1.0iJs0FM7vE5oesHca"  
+    zhipu_api_key = "you-api-key"  
     zhipu_model = "glm-4-flash"     
     max_new_tokens = 512
     temperature = 0.3
